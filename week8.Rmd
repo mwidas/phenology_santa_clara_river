@@ -55,9 +55,6 @@ library(ggplot2)
 library(here)
 library(tmap)
 library(cowplot)
-
-rm(list = ls())
-here::i_am("labs/week8.Rmd")
 ```
 
 ### create NDVI function
@@ -73,7 +70,7 @@ ndvi_fun = function(nir, red){
 We have 8 scenes collected by the Landsat OLI sensor on 8 different days throughout the year.
 Let's start by loading in the first scene collected on June 12, 2018
 ```{r}
-landsat_20180612 <-rast(here("labs", "data", "week8", "landsat_20180612.tif"))
+landsat_20180612 <-rast(here("data", "landsat_20180612.tif"))
 
 landsat_20180612
 ```
@@ -98,14 +95,14 @@ Now we want to repeat the same operations for all 8 scenes. Below is a possible 
 
 #### load in each layer
 ```{r }
-landsat_20180612 <-rast(here("labs", "data", "week8", "landsat_20180612.tif"))
-landsat_20180815 <- rast(here("labs", "data", "week8", "landsat_20180815.tif"))
-landsat_20181018 <- rast(here("labs", "data", "week8", "landsat_20181018.tif"))
-landsat_20181103 <- rast(here("labs", "data", "week8", "landsat_20181103.tif"))
-landsat_20190122 <- rast(here("labs", "data", "week8", "landsat_20190122.tif"))
-landsat_20190223 <- rast(here("labs", "data", "week8", "landsat_20190223.tif"))
-landsat_20190412 <- rast(here("labs", "data", "week8", "landsat_20190412.tif"))
-landsat_20190701 <- rast(here("labs", "data", "week8", "landsat_20190701.tif"))
+landsat_20180612 <-rast(here("data", "landsat_20180612.tif"))
+landsat_20180815 <- rast(here("data", "landsat_20180815.tif"))
+landsat_20181018 <- rast(here("data", "landsat_20181018.tif"))
+landsat_20181103 <- rast(here("data", "landsat_20181103.tif"))
+landsat_20190122 <- rast(here("data", "landsat_20190122.tif"))
+landsat_20190223 <- rast(here("data", "landsat_20190223.tif"))
+landsat_20190412 <- rast(here("data", "landsat_20190412.tif"))
+landsat_20190701 <- rast(here("data", "landsat_20190701.tif"))
 ```
 
 #### rename each layer
@@ -163,9 +160,6 @@ The first attempt was pretty clunky and required a lot of copy/pasting. Because 
 #### starting from scratch
 Let's start over and see how we could do this more efficiently. We'll clear our environment and redefine our function for NDVI.
 ```{r}
-rm(list = ls())
-here::i_am("labs/week8.Rmd")
-
 ndvi_fun = function(nir, red){
   (nir - red) / (nir + red)
 }
@@ -195,7 +189,7 @@ We want a list of the scenes so that we can tell our function to compute NDVI fo
 # the "pattern" option returns names that end in .tif (the file extension for the landsat scences)
 # the "full.names" option returns the full file path for each scene
 
-files <- list.files(here("labs", "data", "week8"), pattern = "*.tif", full.names = TRUE)
+files <- list.files(here("data"), pattern = "*.tif", full.names = TRUE)
 
 files
 
